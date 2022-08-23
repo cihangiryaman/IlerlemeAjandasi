@@ -40,21 +40,20 @@ namespace IlerlemeAjandasi.UI.WFA
                         passCount = true;
                     }
                 }
+                _userManager.UserDTO.Errors.Clear();
             }
             else
             {
                 _userManager.Login(_userManager.UserDTO.NickName, _userManager.UserDTO.Password);
                 this.Close();
             }
-            if (nickCount)
-            {
-                NickNameErrorlbl.Visible = true;
-                PasswordErrorlbl.Visible = false;
-            }
-            if (passCount)
+            if (!nickCount)
             {
                 NickNameErrorlbl.Visible = false;
-                PasswordErrorlbl.Visible = true;
+            }
+            if (!passCount)
+            {
+                PasswordErrorlbl.Visible = false;
             }
             if (nickCount && passCount)
             {
@@ -63,7 +62,7 @@ namespace IlerlemeAjandasi.UI.WFA
             }
         }
 
-        private void RegisterForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void RegisterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             LoginForm loginForm = Application.OpenForms[0] as LoginForm;
             loginForm.Show();
